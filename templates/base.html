@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Záložková anketa</title>
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-4D2B87HFQT"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-4D2B87HFQT');
+  </script>
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      background: #f0f4ff;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      color: #1e293b;
+    }
+
+    header {
+      background: #3b5bdb;
+      color: white;
+      padding: 1rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    header h1 {
+      font-size: 1.3rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    nav a {
+      color: rgba(255,255,255,0.85);
+      text-decoration: none;
+      margin-left: 1.2rem;
+      font-size: 0.9rem;
+      transition: color 0.2s;
+    }
+
+    nav a:hover { color: white; }
+
+    main {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 2.5rem 1rem;
+    }
+
+    .card {
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 4px 24px rgba(59,91,219,0.10);
+      padding: 2.5rem 2rem;
+      max-width: 640px;
+      width: 100%;
+    }
+
+    footer {
+      text-align: center;
+      padding: 1rem;
+      font-size: 0.8rem;
+      color: #94a3b8;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 0.6rem 1.4rem;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      font-size: 0.95rem;
+      font-weight: 600;
+      transition: background 0.2s, transform 0.1s;
+    }
+
+    .btn:active { transform: scale(0.98); }
+
+    .btn-primary { background: #3b5bdb; color: white; }
+    .btn-primary:hover { background: #2f4ac0; }
+
+    .btn-danger { background: #e03131; color: white; }
+    .btn-danger:hover { background: #c92a2a; }
+
+    .btn-secondary { background: #e2e8f0; color: #1e293b; }
+    .btn-secondary:hover { background: #cbd5e1; }
+
+    .alert {
+      padding: 0.8rem 1rem;
+      border-radius: 8px;
+      margin-bottom: 1.2rem;
+      font-size: 0.9rem;
+    }
+
+    .alert-error { background: #fee2e2; color: #b91c1c; border: 1px solid #fca5a5; }
+    .alert-success { background: #dcfce7; color: #166534; border: 1px solid #86efac; }
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1>🗳️ Záložková anketa</h1>
+    <nav>
+      <a href="/">Hlasovat</a>
+      <a href="/results">Výsledky</a>
+      <a href="/about">O anketě</a>
+    </nav>
+  </header>
+
+  <main>
+    <div class="card">
+      {% block content %}{% endblock %}
+    </div>
+  </main>
+
+  <footer>Záložková anketa &copy; 2024</footer>
+</body>
+</html>

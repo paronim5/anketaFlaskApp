@@ -1,0 +1,94 @@
+  {% extends "base.html" %}
+  {% block content %}
+
+  <style>
+    .about-title {
+      font-size: 1.4rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      color: #1e293b;
+    }
+
+    .about-text {
+      line-height: 1.7;
+      color: #334155;
+      margin-bottom: 1rem;
+      font-size: 0.97rem;
+    }
+
+    .about-text + .about-text { margin-top: 0.3rem; }
+
+    h2 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: #3b5bdb;
+      margin: 1.5rem 0 0.5rem;
+    }
+
+    .bug-box {
+      background: #f0f4ff;
+      border: 1px solid #c5d0f0;
+      border-radius: 10px;
+      padding: 1rem 1.2rem;
+      margin-top: 0.5rem;
+      font-size: 0.93rem;
+      color: #334155;
+      line-height: 1.6;
+    }
+
+    .bug-box a {
+      color: #3b5bdb;
+      font-weight: 600;
+    }
+
+    .back-link {
+      display: inline-block;
+      margin-top: 1.8rem;
+      font-size: 0.9rem;
+      color: #3b5bdb;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .back-link:hover { text-decoration: underline; }
+  </style>
+
+  <div class="about-title">O anketě</div>
+
+  <p class="about-text">
+    Tato anketa vznikla jako školní projekt v rámci předmětu webového vývoje.
+    Jejím cílem je procvičit tvorbu jednoduché webové aplikace s backendem v Pythonu
+    (framework Flask) a nasazením na veřejný hosting.
+  </p>
+
+  <p class="about-text">
+    Otázka „Kolik otevřených záložek je ještě normální?" byla zvolena jako lehce
+    odlehčené téma, které je blízké každému, kdo tráví čas u počítače a prohlížeče.
+    Výsledky jsou sdílené mezi všemi návštěvníky a ukládají se na serveru do souboru,
+    takže přetrvají i po obnovení stránky.
+  </p>
+
+  <h2>Technické informace</h2>
+  <p class="about-text">
+    Aplikace běží na Pythonu s frameworkem Flask. Hlasy jsou ukládány do JSON souboru
+    na serveru. Hosting zajišťuje PythonAnywhere (free tier).
+    Reset hlasování je chráněn tokenem a je dostupný pouze správci ankety.
+  </p>
+
+  <h2>Jak nahlásit chybu?</h2>
+  <div class="bug-box">
+    Pokud najdeš technickou chybu, jazykovou chybu nebo cokoli, co nefunguje správně,
+    napiš nám prosím e-mail na adresu:
+    <strong><a href="mailto:kosov@spsejecna.cz">kosov@spsejecna.cz</a></strong>
+    <br><br>
+    Do předmětu e-mailu uveď <em>„Chyba – záložková anketa"</em> a popiš:
+    <ul style="margin-top:0.5rem; padding-left:1.2rem; display:flex; flex-direction:column; gap:0.3rem;">
+      <li>Co jsi dělal/a, když chyba nastala</li>
+      <li>Co jsi očekával/a, že se stane</li>
+      <li>Co se skutečně stalo (případně screenshot)</li>
+    </ul>
+  </div>
+
+  <a href="/" class="back-link">← Zpět na anketu</a>
+
+  {% endblock %}

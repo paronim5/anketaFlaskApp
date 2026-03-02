@@ -1,0 +1,185 @@
+{% extends "base.html" %}
+{% block content %}
+
+<style>
+  .question {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    line-height: 1.4;
+    color: #1e293b;
+  }
+
+  .options { display: flex; flex-direction: column; gap: 0.7rem; margin-bottom: 1.5rem; }
+
+  .option-label {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.85rem 1rem;
+    border: 2px solid #e2e8f0;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: border-color 0.2s, background 0.2s;
+    font-size: 0.97rem;
+  }
+
+  .option-label:hover { border-color: #3b5bdb; background: #f0f4ff; }
+
+  input[type="radio"]:checked + .option-label {
+    border-color: #3b5bdb;
+    background: #eef2ff;
+    font-weight: 600;
+  }
+
+  input[type="radio"] { display: none; }
+
+  .actions { display: flex; gap: 0.75rem; flex-wrap: wrap; margin-top: 0.5rem; }
+
+  /* Výsledky */
+  .results-title {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #64748b;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 1rem;
+  }
+
+  .result-row { margin-bottom: 1rem; }
+
+  .result-header {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.9rem;
+    margin-bottom: 0.3rem;
+    font-weight: 500;
+  }
+
+  .bar-track {
+    height: 12px;
+    background: #e2e8f0;
+    border-radius: 99px;
+    overflow: hidden;
+  }
+
+  .bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #3b5bdb, #748ffc);
+    border-radius: 99px;
+    transition: width 0.5s ease;
+  }
+
+  .total-info {
+    margin-top: 1.2rem;
+    font-size: 0.88rem;
+    color: #64748b;
+    text-align: right;
+  }
+
+  /* Reset sekce */
+  .reset-section {
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid #e2e8f0;
+  }
+
+  .reset-section summary {
+    cursor: pointer;
+    font-size: 0.85rem;
+    color: #94a3b8;
+    user-select: none;
+  }
+
+  .reset-section summary:hover { color: #64748b; }
+
+  .reset-form {
+    display: flex;
+    gap: 0.6rem;
+    margin-top: 0.8rem;
+    flex-wrap: wrap;
+  }
+
+  .reset-form input[type="password"] {
+    flex: 1;
+    padding: 0.55rem 0.9rem;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    min-width: 180px;
+  }
+
+  .divider {
+    border: none;
+    border-top: 1px solid #e2e8f0;
+    margin: 1.5rem 0;
+  }
+</style>
+
+{% if error %}
+<div class="alert alert-error">⚠️ {{ error }}</div>
+{% endif %}
+
+{% if voted %}
+<div class="alert alert-success">✅ Tvůj hlas byl uložen, díky!</div>
+{% endif %}
+
+<p class="question">{{ question }}</p>
+
+{% if voted is not none and not voted %}
+<form method="POST" action="/vote">
+  <div class="options">
+    {% for opt in options %}
+    <div>
+      <input type="radio" name="choice" id="opt_{{ opt.id }}" value="{{ opt.id }}" required>
+      <label class="option-label" for="opt_{{ opt.id }}">{{ opt.label }}</label>
+    </div>
+    {% endfor %}
+  </div>
+  <div class="actions">
+    <button type="submit" class="btn btn-primary">🗳️ Odeslat hlas</button>
+    <a href="/results" class="btn btn-secondary">📊 Jen zobrazit výsledky</a>
+  </div>
+</form>
+{% endif %}
+
+{% if voted is none or voted %}
+{% if voted is not none %}
+<hr class="divider">
+{% endif %}
+<div class="results-title">📊 Aktuální výsledky</div>
+{% for opt in options %}
+{% set count = votes.get(opt.id, 0) %}
+{% set pct = ((count / total * 100) | round(1)) if total > 0 else 0 %}
+<div class="result-row">
+  <div class="result-header">
+    <span>{{ opt.label }}</span>
+    <span>{{ count }} hlasů ({{ pct }}%)</span>
+  </div>
+  <div class="bar-track">
+    <div class="bar-fill" style="width: {{ pct }}%"></div>
+  </div>
+</div>
+{% endfor %}
+<p class="total-info">Celkem hlasů: <strong>{{ total }}</strong></p>
+
+{% if voted is none %}
+<div class="actions" style="margin-top:1.5rem">
+  <a href="/" class="btn btn-primary">🗳️ Chci hlasovat</a>
+</div>
+{% endif %}
+
+{% if show_reset %}
+<div class="reset-section">
+  <details>
+    <summary>🔒 Administrace – reset hlasování</summary>
+    <form method="POST" action="/reset" class="reset-form">
+      <input type="password" name="token" placeholder="Reset token" autocomplete="off">
+      <button type="submit" class="btn btn-danger">Reset</button>
+    </form>
+  </details>
+</div>
+{% endif %}
+{% endif %}
+
+{% endblock %}

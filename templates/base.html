@@ -12,13 +12,19 @@
   <link rel="shortcut icon" href="{{ url_for('static', filename='favicon/favicon.ico') }}">
 
   <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-4D2B87HFQT"></script>
   <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
+    if (!document.querySelector('script[src*="googletagmanager.com/gtag/js?id=G-4D2B87HFQT"]')) {
+      var script = document.createElement('script');
+      script.async = true;
+      script.src = 'https://www.googletagmanager.com/gtag/js?id=G-4D2B87HFQT';
+      document.head.appendChild(script);
 
-    gtag('config', 'G-4D2B87HFQT');
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-4D2B87HFQT');
+    }
   </script>
 
   <style>
